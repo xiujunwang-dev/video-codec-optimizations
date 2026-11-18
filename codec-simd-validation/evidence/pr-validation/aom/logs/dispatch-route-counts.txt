@@ -1,0 +1,43 @@
+Counters:
+  av1_highbd_convolve_2d_sr_intrabc_neon:
+    Hash: 0x01b2390af182f8a5
+    Counters: 31
+    Function count: 162
+    Block counts: [0, 0, 0, 162, 162, 0, 0, 162, 162, 0, 162, 162, 0, 162, 162, 0, 90, 0, 42, 42, 264, 30, 372, 4056, 13284, 42, 90, 42, 450, 16776]
+  av1_highbd_convolve_2d_sr_intrabc_c:
+    Hash: 0xf621c292850fa942
+    Counters: 21
+    Function count: 162
+    Block counts: [0, 0, 0, 0, 162, 162, 0, 0, 162, 162, 4854, 283116, 0, 283116, 283116, 4692, 278424, 0, 278424, 278424]
+  av1_highbd_convolve_y_sr_intrabc_neon:
+    Hash: 0x1f2828cafe46e405
+    Counters: 8
+    Function count: 162
+    Block counts: [0, 0, 42, 222, 84, 450, 34122]
+  av1_highbd_convolve_2d_facade:
+    Hash: 0xaec67e540b9f936f
+    Counters: 17
+    Function count: 648
+    Block counts: [648, 0, 0, 0, 648, 648, 0, 162, 324, 162, 162, 162, 0, 0, 0, 0]
+  av1_highbd_convolve_x_sr_intrabc_neon:
+    Hash: 0x87fd1ae5fa021db2
+    Counters: 9
+    Function count: 162
+    Block counts: [0, 0, 0, 42, 222, 84, 4308, 30264]
+  av1_highbd_convolve_y_sr_intrabc_c:
+    Hash: 0x803cbdad706c6a75
+    Counters: 5
+    Function count: 162
+    Block counts: [0, 0, 4692, 278424]
+  av1_highbd_convolve_x_sr_intrabc_c:
+    Hash: 0x7a65eab26af462ec
+    Counters: 7
+    Function count: 162
+    Block counts: [0, 0, 0, 0, 4692, 278424]
+Instrumentation level: Front-end
+Functions shown: 7
+Total functions: 221
+Maximum function count: 3341088
+Maximum internal block count: 2505816
+Total number of blocks: 511
+Total count: 37404190

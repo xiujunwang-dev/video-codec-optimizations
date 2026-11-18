@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "frozen_at_utc": "2026-11-18T03:31:55.733143+00:00",
+  "stage": "historical replay; prospective evaluation not started",
+  "objective": "Evaluate numeric bounds and phase-specific memory access contracts in native encoder SIMD kernels.",
+  "historical_cases": [
+    "x265-12bit-psy-reduction",
+    "svt-highbd-first-compound-predictor"
+  ],
+  "source_exposure": {
+    "historical_cases": "Known defects and fixes inspected before protocol. Retrospective evidence only.",
+    "svt_subtract": "Two implementation source files previously inspected; not blind.",
+    "svt_sum_squares": "Reserved; source not inspected by primary investigator when this file was frozen."
+  },
+  "x265": {
+    "seeds": [
+      1,
+      17,
+      20261117
+    ],
+    "cases_per_seed_group": 4096,
+    "depths": [
+      10,
+      12
+    ],
+    "groups": [
+      "uniform-independent",
+      "endpoints-zero",
+      "endpoints-near"
+    ],
+    "exhaustive": {
+      "source_masks": 65536,
+      "reconstructions": [
+        "zero",
+        "complement",
+        "near"
+      ]
+    },
+    "strides": [
+      4,
+      7,
+      16
+    ],
+    "offsets_in_pixels": [
+      0,
+      1,
+      3
+    ],
+    "oracles": [
+      "integer Walsh-Hadamard butterfly",
+      "direct Walsh sign-matrix spot checks"
+    ],
+    "paired_inputs": "Identical PRNG, seed, case count and layout for both source versions; hash required to match."
+  },
+  "svt": {
+    "comparisons": [
+      "original Check/0",
+      "Compound/0 output and persistent-buffer state",
+      "ordinary ASan+UBSan",
+      "phase-specific ASan access poisoning"
+    ],
+    "budget_note": "Check and Compound cover different phases and amounts of work. No equal-budget superiority claim from their pass/fail comparison."
+  },
+  "classification": [
+    "historical true defect",
+    "prospective finding requiring validation",
+    "deliberate injected control",
+    "valid no-failure result",
+    "infrastructure failure"
+  ],
+  "reporting": [
+    "Record source commits, blobs and SHA-256, toolchain, platform, commands, seeds, input count, diagnostic, elapsed time.",
+    "Retain unexpected failure as infrastructure/error until investigated.",
+    "Do not infer coding efficiency or end-to-end speed from correctness tests.",
+    "Do not infer real-world defect prevalence or publication acceptance probability."
+  ]
+}

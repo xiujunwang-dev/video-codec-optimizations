@@ -1,0 +1,41 @@
+Branch pushed to the fork; PR creation is pending GitHub authentication.
+Base: AOMediaCodec/SVT-AV1 main ad11d76a6c9cb05ec49d166cf20ec5d286715dc1
+Branch: neon-scaled-compound-first-predictor
+Author: Xiujun Wang <xiujunwang.dev@gmail.com>
+
+Change: guard final output handling in highbd NEON scaled convolution.
+Scope: 2 files, production fix plus regression test. Independent of SSE zeroing PR.
+
+Regression matrix: 18 block sizes x 2 bit depths x 6 scale pairs x 9 filter
+pairs x 9 averaging modes x 3 phases = 52,488 first/second predictor pairs.
+Both stages compare the entire final output and compound buffers, including
+padding, with the C implementation. Output is initialized to 0xffff before
+the first predictor. Phases are complemented for the second predictor.
+Scale pairs (Q10): (512,1024), (1024,512), (1024,1024), (1280,1536),
+(1536,1280), (2048,2048). Phases: zero, maximum, deterministic random.
+
+Validation evidence:
+- before-regression.log: original NEON fails Compound/0, output buffer differs.
+- native-tests.log/xml: full CMake integration; 108 enabled tests pass.
+- sanitize-tests.log/xml: focused actual NEON sources + verbatim C references;
+  90 enabled tests pass under ASan and UBSan (halt_on_error=1).
+- sse-tests.log/xml: 90 enabled tests pass using x86_64 SSE under Rosetta.
+- poison-before-tests.log: temporary ASan-poisoned im_block2 is read by old code.
+- poison-after-tests.log: fixed code passes all 36 compound parameters with
+  im_block2 poisoned during first prediction. This checks forbidden access on
+  that path; ordinary ASan/UBSan alone does not detect uninitialized values.
+- smoke/summary.json: eight 32-frame 160x96 samples encoded and decoded;
+  8/10-bit x superres off/random x C/NEON. Each C/NEON pair matches bytewise.
+  Decoder is a small IVF reader linked against an existing local libaom.a.
+- git diff --check and changed-line clang-format pass.
+
+Reproduce:
+cmake -S ../SVT-AV1-neon-compound-review -B cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_OSX_ARCHITECTURES=arm64
+cmake --build cmake --target SvtAv1UnitTests SvtAv1EncApp --parallel 4
+../SVT-AV1-neon-compound-review/Bin/Release/SvtAv1UnitTests --gtest_filter='*ConvolveScaleTest.*'
+python3 validate.py
+python3 smoke.py
+
+Impact: confirmed uninitialized temporary-buffer read and unintended dst
+write on first compound prediction. No final bitstream corruption is claimed.
+Temporary poisoning instrumentation and helper scripts are outside the PR.

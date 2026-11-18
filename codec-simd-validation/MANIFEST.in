@@ -1,0 +1,6 @@
+include LICENSE README.rst protocol.json run_study.py
+recursive-include docs *.rst
+recursive-include tests *.py
+recursive-include scripts *.py
+recursive-include harnesses *.py *.cpp *.cc *.c *.h
+recursive-include simd_validation/data *.json

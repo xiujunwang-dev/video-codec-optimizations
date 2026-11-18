@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codec-simd-validation"
+version = "0.1.0"
+description = "Reproducible numeric, phase-state and dispatch checks for video codec SIMD kernels"
+readme = "README.rst"
+requires-python = ">=3.10"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Testing",
+]
+
+[project.scripts]
+codec-simd-validate = "simd_validation.cli:main"
+
+[tool.setuptools]
+packages = ["simd_validation", "simd_validation.adapters", "simd_validation.harnesses"]
+package-dir = {"simd_validation.harnesses" = "harnesses"}
+
+[tool.setuptools.package-data]
+"simd_validation" = ["data/*.json"]
+"simd_validation.harnesses" = ["*.cpp", "*.cc", "*.c", "*.h"]

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "version": "0.1.0",
+  "objective": "Evaluate reusable numeric, phase-state and dispatch checks for video codec SIMD implementations.",
+  "current_stage": "historical replay tool development; prospective evaluation not started",
+  "historical_cases": ["x265-12bit-psy-reduction", "svt-highbd-first-compound-predictor", "aom-highbd-intrabc-dispatch"],
+  "result_classes": ["historical_replay", "prospective_finding_pending_validation", "injected_control", "valid_no_failure", "infrastructure_failure"],
+  "primary_unit": "An independently reproduced root cause in a registered function family, not each input, vector lane, bit depth or observation row.",
+  "candidate_enrollment": {
+    "initial_slots": {"x265": 2, "svt": 2, "aom": 2},
+    "implementation_access": "Do not inspect a candidate implementation before recording known prior exposure and freezing its interface-derived contract.",
+    "prior_exposure": "Reconcile the work histories of all participating reviewers. An earlier reserved label is insufficient evidence of current non-exposure.",
+    "uncertain_exposure": "Keep exposure as unknown and exclude the target from blind-evaluation claims until resolved. Exposed targets may be reported in a separate exploratory cohort.",
+    "freeze": "Record source commit identifiers, interface contracts, participant exposure statements, budgets, seeds and selected targets in a new checksummed registration directory before execution."
+  },
+  "arms": [
+    {"id": "original_tests", "role": "Document existing upstream coverage and execution, without pretending it has the same input budget."},
+    {"id": "uniform_differential", "role": "Same registered invocation budget, legal layouts and seeds; ordinary uniform inputs and C differential reference."},
+    {"id": "sanitized_differential", "role": "The same uniform input stream with the registered ordinary memory sanitizers and differential reference."},
+    {"id": "contract_checks", "role": "Same invocation budget with registered structured numeric inputs, phase-state predicates or required dispatch checks. Report each component separately."}
+  ],
+  "contract_fields": ["input domain", "legal layouts and padding", "numeric reference and its independence", "phase read/write rules", "required entry and allowed routes", "expected invocation count"],
+  "metrics": ["independent confirmed root causes", "false positives", "time to first evidence", "executed invocations", "checked phases and routes", "wall-clock cost", "manual contract authoring cost"],
+  "reporting": [
+    "Report retrospective, prospective, injected and infrastructure outcomes separately.",
+    "Publish registered targets with no failures as well as failures.",
+    "Use identical paired inputs for before/fixed comparisons and retain fingerprints.",
+    "Equal invocation counts do not imply equal runtime or equal manual effort; report both.",
+    "Do not pool the three historical case dimensions as an equal-budget detector comparison.",
+    "Sanitizers do not establish absence of numeric errors or initialized reads; sentinel writes do not prove absence of reads.",
+    "Explicit local dispatch installation does not establish production CPU detection or whole-codec coverage.",
+    "Checksums detect retained-content changes; they do not authenticate authorship or the history of a registration.",
+    "Run time of a checking harness is not encoder throughput or end-to-end performance."
+  ],
+  "investment_gate": {
+    "method_paper": "Consider further method evaluation after at least two independently validated new root causes across two projects, including one state/access/route issue missed by registered baselines. This is an internal investment rule, not a publication requirement.",
+    "software_paper": "Proceed based on reusable software, documented scope and independent replication; do not invent new discoveries if only historical cases are available."
+  }
+}

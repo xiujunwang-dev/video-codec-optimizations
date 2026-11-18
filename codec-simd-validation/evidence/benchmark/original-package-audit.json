@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "version": "0.1.0",
+  "status": "local_validation_complete",
+  "distributions": [
+    {
+      "path": "codec_simd_validation-0.1.0-py3-none-any.whl",
+      "size": 51357,
+      "sha256": "1f2bbe7c0a043911d5b779e7b6fb2d3e2559b2b8501e1aa21e8f6eba168a9d9b"
+    },
+    {
+      "path": "codec_simd_validation-0.1.0.tar.gz",
+      "size": 65586,
+      "sha256": "33a3f28a63567f3f2f6b76422fdf7699d794151fad06c3c6bd25f54f05642ac7"
+    },
+    {
+      "path": "case-sources-0.1.0.zip",
+      "size": 260802,
+      "sha256": "41366462454ca17f1810edfaf5c922d0f81a897926b7b25554aa6ae00c3c7837"
+    }
+  ],
+  "package_checks": {
+    "wheel_record_entries": 24,
+    "runtime_files_matching_checkout": 18,
+    "source_distribution_files_matching_checkout": 31
+  },
+  "automated_tests": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": 24,
+    "failed": 0
+  },
+  "historical_replay": {
+    "cases": 3,
+    "status": "validated",
+    "matched_observations": 229,
+    "portable_source_references": 57,
+    "recorded_git_invocations_in_portable_cases": 0
+  },
+  "reproduction_audit": {
+    "path": "output/release-reproduction-audit-20261118.json",
+    "sha256": "87f6535e2e635cf425d270b661e09a867563e2138444447643ba323303ca8350"
+  },
+  "run_checksums": [
+    {
+      "path": "output/baseline-full-20261118/checksums.json",
+      "sha256": "3af5758070e41d83a50c9f903e62efdc20586f9b0e98a86bef4c2c7a6e5e63c7"
+    },
+    {
+      "path": "output/release-portable-full-20261118/checksums.json",
+      "sha256": "399b37af93ba548e8e81017e6965427191a5342cf9a911113d26709373e46ed5"
+    }
+  ],
+  "prospective_evaluation_started": false,
+  "independent_replication_completed": false,
+  "limits": [
+    "Only the recorded macOS AArch64 host/compiler combination has been exercised.",
+    "All shipped cases are known historical replays.",
+    "Matching observations are not independent defects or prospective discoveries.",
+    "Local checksums do not provide a signature or an external release timestamp."
+  ]
+}

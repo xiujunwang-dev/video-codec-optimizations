@@ -1,0 +1,78 @@
+12-bit AArch64 心理视觉代价溢出：本地验证记录
+
+基线：1836f70c17cde142ac023da71a96ba9cc49c9213
+本地分支：psy-cost-12bit-overflow
+修复提交：45fbaeeba4b45215e1fc2595c57036f94bbbf573
+当前分支提交：0b28c58efdc235eb0904a9c593299e9ec9929973
+工作树：/Users/soldierwang/Desktop/work_code/s265/x265-psy-cost-12bit-review
+2026-11-08：按请求将修复分支推送到 xiujunwang-dev/x265，
+已准备 PR 提交页面，尚未创建远程 PR；由用户点击提交。
+
+根因和影响：calc_energy_4x4() 使用 vaddvq_u16 将八个通道归约到
+16 位结果；12-bit 输入的 SATD 可超过 65535。把变量声明为 int
+不能挽回在指令内部已经丢失的高位。修复使用 vaddlvq_u16 进行
+32 位归约，覆盖 Neon 与采用同样求和方式的 SVE2 路径。
+
+最小输入，参考重建块全零，像素步长均为 4：
+4095    0 4095    0
+   0    0    0    0
+   0    0 4095 4095
+   0 4095 4095    0
+
+SATD=73710，DC 项=24570>>2=6142，C 与独立计算结果为 67568。
+旧 Neon 在求和时得到 8174，最终错误结果为 2032。
+修复后返回 67568。原问题影响 psy-rd 的率失真决策，可能改变
+模式选择、残差编码、码率和重建图像，不限于色度 SAO 或 CTU16。
+同一输入关闭 psy-rd 后，原 12-bit/CTU16/I420 对照恢复一致。
+未对真实片源的画质或 BD-rate 损失做定量评估。
+
+实现范围：
+- source/common/aarch64/pixel-prim.cpp：扩大 4x4 代价求和结果位宽。
+- source/common/aarch64/pixel-prim-sve2.cpp：修复对应归约。
+- source/test/pixelharness.cpp：增加高对比度的确定性回归用例。
+三个文件净新增 21 行、删除 2 行；诊断脚本和日志不进入提交。
+前一个 SAO 修复仍保留在独立分支 sao-neon-inactive-lanes。
+
+复现与原语验证：
+- baseline-regression.log：新回归用例链接原始像素实现，返回 255，
+  明确报告 ref=67568 opt=2032。
+- reproduce.cpp：独立整数 Hadamard 参考，并同时调用 C 与 Neon。
+  枚举全部 65536 个 4x4 二值图案，每个分别比较全零、互补和
+  只相差 1 的重建块，共 196608 例/位深。
+- 原始 8/10-bit：0 个差异；原始 12-bit：44800 个 Neon 差异。
+  C 在三个位深均与独立参考一致。
+- 修复后的 8/10/12-bit：每个位深 196608 例全部一致。
+- 完整 TestBench 在 8/10/12-bit 通过，实测 Neon 和 Neon DotProd。
+- SVE2 翻译单元在 8/10/12-bit 均编译通过；本机没有 SVE2，
+  未执行 SVE2 指令。见 sve2-compile-*.log。
+- 环境：Apple M1、ARM64、AppleClang 21、Release、C++17。
+
+整帧验证使用已有的确定性 96x80、12 帧片源，固定单帧线程和
+关闭 WPP；编码命令及 SHA256 保存在 validation.json 和
+integration.json。该矩阵包含 21 组 C/Neon 对照：
+- SAO 关闭：8/10-bit 各测三种色度格式的 CTU16；12-bit 测
+  I420/I422/I444 与 CTU16/32/64 的全部九种组合，共 15 组。
+  其中 14 组码流完全一致。12-bit I444/CTU64 仍有独立差异。
+- 验证专用程序另行链接已有 SAO 修复：12-bit、CTU16、三种色度
+  格式各测 SAO 去块前/后统计，共 6 组。I420/I422 的 4 组一致；
+  I444 的 2 组存在独立差异。
+- 全部 21 组 Neon 输出均通过 ffmpeg -v error -xerror 解码检查。
+- 上述三个剩余项通过 C 替换 DCT/量化函数组后与全 C 一致；
+  替换整个像素函数组或仅 psy_cost_pp 均不能消除差异。
+  详见 DCT_DIFFERENCE.txt；它们不作为本修复已解决的结果。
+
+快速查看：
+./original-reproduce-12  # 预期退出 1
+./fixed-reproduce-12    # 预期退出 0
+./fixed-12/test/TestBench --nobench
+
+validate.py 保存构建、回归和原语测试流程；integration.py 保存
+整帧矩阵及单独标记剩余差异的检查。脚本使用本目录及前一个
+SAO 验证目录中保留的构建、诊断对象和输入。逐条命令、退出码和
+耗时保存在 validation.json（当前 114 条命令，退出码均符合预期）。
+
+审阅文件：PR_TITLE.txt、PR_DESCRIPTION.txt、psy-cost-12bit-overflow.patch。
+
+注释调整：删除本次修复新增的 3 行代码注释，算法及回归输入未变。
+执行 git diff --check 并确认仅删除注释，未重复运行算法测试。
+PR_DESCRIPTION.txt 已缩短；GitHub 创建页面仍停在登录页，正文尚未填入网页。

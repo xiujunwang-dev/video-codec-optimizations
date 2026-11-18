@@ -1,0 +1,25 @@
+PR: https://github.com/AOMediaCodec/SVT-AV1/pull/3566
+Date: 2026-11-06
+Branch: neon-scaled-compound-first-predictor
+Base: e81d772d289854a4a548ae147614f728124436aa
+Previous commit: b16f38f20662356ac778a82dbcfead7525e51f84
+Updated commit: 73a06389f981722c620e26cd270ad4e98f2b4459
+Author: Xiujun Wang <xiujunwang.dev@gmail.com>
+Commit message: NEON: fix scaled compound first predictor
+
+Resolved the conflict in test/av1_convolve_scale_test.cc.
+Preserved the upstream SSE scaled tests without modification.
+Compound tests now use the upstream x_step_qn_ and y_step_qn_ members.
+The NEON implementation is byte-identical to the previous PR commit.
+The branch contains one commit on top of main.
+
+Validation:
+- Native ARM64 CMake build completed; 108 scale tests passed.
+- Focused NEON ASan/UBSan build completed; 90 tests passed.
+- Focused x86_64 SSE4.1 build under Rosetta completed; 126 tests passed.
+- git diff --check passed; working tree clean.
+- Remote head verified; GitHub reports mergeable=true.
+- Basic CI Workflow and Extended CI Workflow require approval.
+
+Logs and XML reports: rebase-native-tests.*, rebase-sanitize-tests.*,
+rebase-sse-tests.*. Build logs use the corresponding -build.log suffix.

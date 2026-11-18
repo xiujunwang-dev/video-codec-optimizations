@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "software": {
+    "name": "Codec SIMD Validation",
+    "version": "0.1.0",
+    "authors": [
+      "Xiujun Wang"
+    ],
+    "license": "BSD-2-Clause for the toolkit and original harnesses",
+    "repository": "https://github.com/xiujunwang-dev/video-codec-optimizations/tree/v0.1.0/codec-simd-validation"
+  },
+  "artifacts": [
+    {
+      "path": "dist/codec_simd_validation-0.1.0-py3-none-any.whl",
+      "bytes": 51357,
+      "sha256": "1f2bbe7c0a043911d5b779e7b6fb2d3e2559b2b8501e1aa21e8f6eba168a9d9b"
+    },
+    {
+      "path": "dist/case-sources-0.1.0.zip",
+      "bytes": 260742,
+      "sha256": "b07fe48b0c59fb987bbc990390101794b34a1e451dd46ee65a4593f60a89d294"
+    },
+    {
+      "path": "evidence/benchmark/benchmark-runs-20261118.zip",
+      "bytes": 2699083,
+      "sha256": "7bbc85493fbde3174bcf979f55bcdfcc0795c8b8b982091720031d353814963b"
+    }
+  ],
+  "validation": {
+    "automated_tests_passed": 24,
+    "wheel_installation": "passed",
+    "installed_wheel_cli": "passed",
+    "source_archive_references": 57,
+    "source_archive_content_objects": 53,
+    "benchmark_run_files_checked": 758,
+    "matching_observation_records": 229,
+    "host_compiler_combinations": 1,
+    "prospective_evaluation": false,
+    "independent_replication": false
+  },
+  "prior_patch_records": {
+    "original_files": 13,
+    "checksummed_entries": 15,
+    "checksums_verified": true
+  },
+  "limits": [
+    "The full-profile cases are retrospective historical replays.",
+    "Same-host observation agreement is not independent replication.",
+    "The local AOM facade test does not exercise CPU feature detection or generated runtime dispatch.",
+    "The SVT initialized-buffer checks do not diagnose uninitialized reads.",
+    "The retained source archive does not independently prove commit membership."
+  ]
+}

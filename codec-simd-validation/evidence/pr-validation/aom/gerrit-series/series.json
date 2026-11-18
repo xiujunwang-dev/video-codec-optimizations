@@ -1,0 +1,75 @@
+{
+  "base": "aac27b8f291ed449fac576bcce0ad0ca189be851",
+  "branch": "intrabc-convolution-fixes",
+  "topic": "intrabc-convolution-fixes",
+  "target_branch": "main",
+  "commits": [
+    {
+      "commit": "40c1ccb57b8eb1398fd93ab9bd8687462b029000",
+      "parent": "aac27b8f291ed449fac576bcce0ad0ca189be851",
+      "subject": "test: Fix IntraBC convolution benchmark parameters",
+      "change_id": "I9c910861e7c9ab5eac8630383ab3eb5b5b9e9c59"
+    },
+    {
+      "commit": "1f54f294409fcf06e6443e3a10db602a830a629b",
+      "parent": "40c1ccb57b8eb1398fd93ab9bd8687462b029000",
+      "subject": "test: Cover IntraBC convolution boundaries and rounding",
+      "change_id": "I7743b08f85886bc7335703ca7b3518909812b570"
+    },
+    {
+      "commit": "a583a61feb0d424959a1ff0cff5e298e31c98992",
+      "parent": "1f54f294409fcf06e6443e3a10db602a830a629b",
+      "subject": "av1: Use runtime dispatch for high bit-depth IntraBC",
+      "change_id": "Ibb89d92ec04aadf349ad73942ca78c74b64c7520"
+    }
+  ],
+  "uploaded_date": "2026-11-17",
+  "changes": [
+    {
+      "number": 221681,
+      "url": "https://aomedia-review.googlesource.com/c/aom/+/221681",
+      "subject": "test: Fix IntraBC convolution benchmark parameters",
+      "status": "NEW",
+      "change_id": "I9c910861e7c9ab5eac8630383ab3eb5b5b9e9c59",
+      "commit": "40c1ccb57b8eb1398fd93ab9bd8687462b029000",
+      "patchset": 1,
+      "parents": [
+        "aac27b8f291ed449fac576bcce0ad0ca189be851"
+      ]
+    },
+    {
+      "number": 221682,
+      "url": "https://aomedia-review.googlesource.com/c/aom/+/221682",
+      "subject": "test: Cover IntraBC convolution boundaries and rounding",
+      "status": "NEW",
+      "change_id": "I7743b08f85886bc7335703ca7b3518909812b570",
+      "commit": "1f54f294409fcf06e6443e3a10db602a830a629b",
+      "patchset": 1,
+      "parents": [
+        "40c1ccb57b8eb1398fd93ab9bd8687462b029000"
+      ]
+    },
+    {
+      "number": 221683,
+      "url": "https://aomedia-review.googlesource.com/c/aom/+/221683",
+      "subject": "av1: Use runtime dispatch for high bit-depth IntraBC",
+      "status": "NEW",
+      "change_id": "Ibb89d92ec04aadf349ad73942ca78c74b64c7520",
+      "commit": "a583a61feb0d424959a1ff0cff5e298e31c98992",
+      "patchset": 1,
+      "parents": [
+        "1f54f294409fcf06e6443e3a10db602a830a629b"
+      ]
+    }
+  ],
+  "local_validation": {
+    "tests": 1269,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 86.482,
+    "asan": true,
+    "ubsan": true,
+    "werror": true,
+    "assertions": true
+  }
+}

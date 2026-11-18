@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "exposure_review_required",
+  "prospective_evaluation_started": false,
+  "notes": [
+    "These are interface-level candidates, not certified unseen targets or a frozen prospective sample.",
+    "No candidate implementation was opened as part of selecting this list.",
+    "Previous sessions and participating reviewers may have inspected them; exposure is unknown until reconciled.",
+    "The older svt_sum_squares reserved label is preserved as history, not treated as proof of current non-exposure."
+  ],
+  "candidates": [
+    {"id": "x265-ssim", "project": "x265", "family": "SSIM statistics and reduction", "exposure": "unknown", "contract": "not_frozen", "executed": false},
+    {"id": "x265-interpolation", "project": "x265", "family": "Fractional-pixel interpolation", "exposure": "unknown", "contract": "not_frozen", "executed": false},
+    {"id": "svt-sum-squares", "project": "svt", "family": "Sum of squares", "exposure": "unknown", "contract": "not_frozen", "executed": false},
+    {"id": "svt-wedge-sse", "project": "svt", "family": "Wedge error reduction", "exposure": "unknown", "contract": "not_frozen", "executed": false},
+    {"id": "aom-mask-blend", "project": "aom", "family": "Masked blending", "exposure": "unknown", "contract": "not_frozen", "executed": false},
+    {"id": "aom-warp", "project": "aom", "family": "Warped prediction", "exposure": "unknown", "contract": "not_frozen", "executed": false}
+  ]
+}
